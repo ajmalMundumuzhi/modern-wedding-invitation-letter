@@ -161,7 +161,7 @@ const HeroInvitation = ({ isRevealed = false }) => (
 </motion.p>
 
 <motion.h2
-  className="font-serif text-7xl font-light italic tracking-wide leading-tight text-white/80 sm:text-8xl"
+  className="font-serif text-7xl font-light italic tracking-wide leading-tight text-white/80 sm:text-6xl"
   initial={{ opacity: 0, y: 20 }}
   animate={isRevealed ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
   transition={{ duration: 1.2, delay: 1.5 }}

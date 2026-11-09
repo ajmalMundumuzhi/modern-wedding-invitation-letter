@@ -66,7 +66,7 @@ const Entrance = ({ onStartOpen, opening = false }) => {
           }
           transition={{ duration: 0.8 }}
         >
-          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-5xl">
+          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-4xl">
   Zainulabidheen
 </p>
 
@@ -74,7 +74,7 @@ const Entrance = ({ onStartOpen, opening = false }) => {
   &
 </p>
 
-<p className="font-serif text-7xl font-light italic tracking-wide leading-tight text-ivory sm:text-8xl">
+<p className="font-serif text-7xl font-light italic tracking-wide leading-tight text-ivory sm:text-4xl">
   Sana Ek
 </p>
 
