@@ -67,7 +67,7 @@ export const INVITE = {
 
 export const PHOTOS = [
   {
-    src: '/public/media__1776859894044.png',
+    src: '/media__1776859894044.png',
     alt: 'Wedding couple photograph',
     pos: '50% 25%',
     zoom: 1,
