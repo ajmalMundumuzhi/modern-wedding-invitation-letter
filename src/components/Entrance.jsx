@@ -70,7 +70,7 @@ const Entrance = ({ onOpen, onStartOpen }) => {
           whileTap={{ scale: 0.96 }}
           className="mt-14 border border-gold/60 px-10 py-4 font-serif text-[10px] uppercase tracking-[0.35em] text-gold transition-colors hover:bg-gold hover:text-wine disabled:opacity-60"
         >
-          {opening ? 'Opening Invitation' : 'Tap to Enter'}
+          {opening ? 'Opening Invitation' : 'See Invitation'}
         </motion.button>
 
         <p className="mt-8 font-serif text-xs italic tracking-[0.2em] text-muted">
