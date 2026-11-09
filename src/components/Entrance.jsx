@@ -1,82 +1,118 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { INVITE } from '../config';
 
-const Entrance = ({ onOpen, onStartOpen }) => {
-  const [opening, setOpening] = useState(false);
+const Entrance = ({ onStartOpen, opening = false }) => {
+  const [clicked, setClicked] = useState(false);
 
   const handleOpen = () => {
-    if (opening) return;
+    if (clicked || opening) return;
 
-    setOpening(true);
+    setClicked(true);
     onStartOpen?.();
+  };
 
-    setTimeout(() => onOpen?.(), 1100);
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleOpen();
+    }
   };
 
   return (
-    <main className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#21070d] px-6 py-12 text-center">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(116,42,57,0.32),transparent_65%)]" />
+    <main
+      onClick={handleOpen}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label="Open wedding invitation"
+      className="relative flex min-h-[100svh] cursor-pointer items-center justify-center overflow-hidden bg-[#21070d] px-6 py-12 text-center outline-none"
+    >
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(116,42,57,0.3),transparent_65%)]" />
 
       <div className="pointer-events-none absolute inset-5 border border-gold/20 sm:inset-8">
         <div className="absolute inset-2 border border-gold/10" />
       </div>
 
+      <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+
       <motion.div
         className="relative z-10 mx-auto flex w-full max-w-md flex-col items-center"
         animate={
           opening
-            ? { opacity: 0, y: -20, scale: 1.03 }
-            : { opacity: 1, y: 0, scale: 1 }
+            ? { opacity: 0, scale: 0.96, y: -12 }
+            : { opacity: 1, scale: 1, y: 0 }
         }
-        transition={{ duration: 0.7 }}
+        transition={{
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        <p className="font-serif text-[10px] uppercase tracking-[0.4em] text-gold">
-          {INVITE.arabic}
-        </p>
-
-        <div className="my-12 flex flex-col items-center">
-          <p className="font-script text-7xl text-ivory sm:text-8xl">
-            S<span className="mx-2 text-gold">&</span>Z
-          </p>
-
-          <div className="gold-divider mt-5">✦</div>
-        </div>
-
-        <p className="font-serif text-xs uppercase tracking-[0.35em] text-gold">
-          {INVITE.kicker}
-        </p>
-
-        <h1 className="mt-6 font-script text-4xl leading-tight text-ivory sm:text-5xl">
-          {INVITE.bride}
-        </h1>
-
-        <p className="my-2 font-serif text-xl italic text-gold">&</p>
-
-        <h2 className="font-script text-4xl leading-tight text-ivory sm:text-5xl">
-          {INVITE.groom}
-        </h2>
-
-        <p className="mt-8 font-serif text-[10px] uppercase tracking-[0.3em] text-muted">
-          {INVITE.weekday} · {INVITE.dateNumeric}
-        </p>
-
-        <motion.button
-          type="button"
-          onClick={handleOpen}
-          disabled={opening}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.96 }}
-          className="mt-14 border border-gold/60 px-10 py-4 font-serif text-[10px] uppercase tracking-[0.35em] text-gold transition-colors hover:bg-gold hover:text-wine disabled:opacity-60"
+        <motion.p
+          className="font-serif text-[10px] uppercase tracking-[0.55em] text-gold/80"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: opening ? 0 : 1, y: opening ? -8 : 0 }}
+          transition={{ delay: 0.3, duration: 0.9 }}
         >
-          {opening ? 'Opening Invitation' : 'See Invitation'}
-        </motion.button>
+          Together with their families
+        </motion.p>
 
-        <p className="mt-8 font-serif text-xs italic tracking-[0.2em] text-muted">
-          Insha Allah
-        </p>
+        <motion.div
+          className="my-14 flex flex-col items-center sm:my-16"
+          animate={
+            opening
+              ? { scale: 1.05, opacity: 0 }
+              : { scale: 1, opacity: 1 }
+          }
+          transition={{ duration: 0.8 }}
+        >
+          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-7xl">
+  Zainulabidheen
+</p>
+
+<p className="mt-1 font-serif text-sm italic tracking-[0.25em] text-gold/90">
+  K.P
+</p>
+
+<p className="my-4 font-serif text-3xl font-light italic text-gold">
+  &
+</p>
+
+<p className="font-serif text-7xl font-light italic tracking-wide leading-tight text-ivory sm:text-8xl">
+  Sana Ek
+</p>
+
+          <div className="gold-divider mt-8 text-gold/80">
+            ✦
+          </div>
+        </motion.div>
+
+        <motion.p
+          className="mt-2 font-serif text-[10px] uppercase tracking-[0.45em] text-gold/80"
+          animate={{ opacity: opening ? 0 : 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          A celebration of love
+        </motion.p>
+
+        <motion.p
+          className="mt-16 font-serif text-[9px] uppercase tracking-[0.4em] text-muted/80"
+          animate={
+            opening
+              ? { opacity: 0 }
+              : { opacity: [0.45, 0.9, 0.45] }
+          }
+          transition={{
+            duration: 2.8,
+            repeat: opening ? 0 : Infinity,
+            ease: 'easeInOut',
+          }}
+        >
+          Tap anywhere to enter
+        </motion.p>
       </motion.div>
+
+      <div className="pointer-events-none absolute bottom-12 left-1/2 h-10 w-px -translate-x-1/2 bg-gradient-to-b from-gold/40 to-transparent" />
     </main>
   );
 };

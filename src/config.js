@@ -1,13 +1,13 @@
 
-export const WHATSAPP_NUMBER = '61468898137';
-export const CALL_NUMBER = '+919446990357';
+export const WHATSAPP_NUMBER = '+918086542622';
+export const CALL_NUMBER = '+918086542622';
 
 export const waLink = (text, number = WHATSAPP_NUMBER) =>
   `https://wa.me/${String(number).replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
 
 export const INVITE = {
+  groom: 'Zainulabidheen',
   bride: 'Sana Ek',
-  groom: 'Zainulabidheen K.P',
   dateNumeric: '03 December 2026',
   weekday: 'Thursday',
   arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
@@ -33,16 +33,16 @@ export const INVITE = {
   ],
   families: [
     {
-      name: 'Sana Ek',
-      relation: 'Daughter of',
-      parents: 'Mr. Ek Koya (Late) & Mrs. Sakeena MSV',
-      home: 'Sana Mahal (H), Kovoor, Kallady (P.O), Medical College',
-    },
-    {
       name: 'Zainulabidheen K.P',
       relation: 'Son of',
       parents: 'Mr. K.P Koya & Mrs. Suhana C.V',
       home: 'Kuttilthazham, Mankavu, Calicut',
+    },
+    {
+      name: 'Sana Ek',
+      relation: 'Daughter of',
+      parents: 'Mr. Ek Koya (Late) & Mrs. Sakeena MSV',
+      home: 'Sana Mahal (H), Kovoor, Kallady (P.O), Medical College',
     },
   ],
   verse:
@@ -51,7 +51,7 @@ export const INVITE = {
 
 export const PHOTOS = [
   {
-    src: '/media__1776859894044.png',
+    src: '/couple.jpeg',
     alt: 'Sana and Zainulabidheen wedding photograph',
     pos: '50% 25%',
     zoom: 1,
