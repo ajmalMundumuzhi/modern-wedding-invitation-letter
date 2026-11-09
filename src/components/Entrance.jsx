@@ -66,7 +66,7 @@ const Entrance = ({ onStartOpen, opening = false }) => {
           }
           transition={{ duration: 0.8 }}
         >
-          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-7xl">
+          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-5xl">
   Zainulabidheen
 </p>
 
