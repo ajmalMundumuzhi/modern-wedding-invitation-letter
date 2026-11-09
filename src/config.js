@@ -1,3 +1,4 @@
+
 export const WHATSAPP_NUMBER = '61468898137';
 export const CALL_NUMBER = '+919446990357';
 
@@ -5,49 +6,35 @@ export const waLink = (text, number = WHATSAPP_NUMBER) =>
   `https://wa.me/${String(number).replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
 
 export const INVITE = {
-  groom: 'Zainulabidheen K.P',
   bride: 'Sana Ek',
-  dateNumeric: '03.12.2026',
-
+  groom: 'Zainulabidheen K.P',
+  dateNumeric: '03 December 2026',
+  weekday: 'Thursday',
   arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
-
   kicker: 'The Wedding Celebration',
-
-  card: {
-    day: '03',
-    ordinal: 'rd',
-    month: 'December',
-    year: '2026',
-    venue: 'Nova Auditorium, Palazhi',
-    note: 'Nikkah at 10:30 AM',
-  },
-
-  cta: {
-    top: 'Share',
-    script: 'Your RSVP',
-  },
-
+  venue: 'Nova Auditorium, Palazhi',
+  nikkahTime: '10:30 AM',
+  celebrationTime: '12:00 PM – 03:00 PM',
   events: [
     {
+      number: '01',
       title: 'The Nikkah',
       date: 'Thursday, 03 December 2026',
       time: '10:30 AM',
       venue: 'Nova Auditorium, Palazhi',
-      map: '',
     },
     {
+      number: '02',
       title: 'Wedding Celebration',
       date: 'Thursday, 03 December 2026',
       time: '12:00 PM – 03:00 PM',
       venue: 'Nova Auditorium, Palazhi',
-      map: '',
     },
   ],
-
   families: [
     {
       name: 'Sana Ek',
-      relation: 'Beloved daughter of',
+      relation: 'Daughter of',
       parents: 'Mr. Ek Koya (Late) & Mrs. Sakeena MSV',
       home: 'Sana Mahal (H), Kovoor, Kallady (P.O), Medical College',
     },
@@ -58,17 +45,14 @@ export const INVITE = {
       home: 'Kuttilthazham, Mankavu, Calicut',
     },
   ],
-
-  verse: {
-    text: 'With the blessings of Allah, we invite you to celebrate this beautiful beginning.',
-    ref: 'Insha Allah',
-  },
+  verse:
+    'With the blessings of Allah, we invite you to celebrate this beautiful beginning.',
 };
 
 export const PHOTOS = [
   {
     src: '/media__1776859894044.png',
-    alt: 'Wedding couple photograph',
+    alt: 'Sana and Zainulabidheen wedding photograph',
     pos: '50% 25%',
     zoom: 1,
   },

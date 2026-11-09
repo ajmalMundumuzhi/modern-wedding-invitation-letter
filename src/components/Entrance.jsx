@@ -1,15 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, MotionConfig } from 'framer-motion';
-import { EnvelopeWithFlowers } from './Envelope';
+
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { INVITE } from '../config';
 
 const Entrance = ({ onOpen, onStartOpen }) => {
   const [opening, setOpening] = useState(false);
-  const timer = useRef(null);
-
-  useEffect(() => {
-    return () => clearTimeout(timer.current);
-  }, []);
 
   const handleOpen = () => {
     if (opening) return;
@@ -17,93 +12,72 @@ const Entrance = ({ onOpen, onStartOpen }) => {
     setOpening(true);
     onStartOpen?.();
 
-    timer.current = setTimeout(() => {
-      onOpen?.();
-    }, 1500);
+    setTimeout(() => onOpen?.(), 1100);
   };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <main className="paper-texture relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 py-12 text-center">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-28 top-10 h-64 w-64 rounded-full bg-blush/15 blur-3xl" />
-          <div className="absolute -right-28 bottom-10 h-72 w-72 rounded-full bg-sage/20 blur-3xl" />
+    <main className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#21070d] px-6 py-12 text-center">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(116,42,57,0.32),transparent_65%)]" />
+
+      <div className="pointer-events-none absolute inset-5 border border-gold/20 sm:inset-8">
+        <div className="absolute inset-2 border border-gold/10" />
+      </div>
+
+      <motion.div
+        className="relative z-10 mx-auto flex w-full max-w-md flex-col items-center"
+        animate={
+          opening
+            ? { opacity: 0, y: -20, scale: 1.03 }
+            : { opacity: 1, y: 0, scale: 1 }
+        }
+        transition={{ duration: 0.7 }}
+      >
+        <p className="font-serif text-[10px] uppercase tracking-[0.4em] text-gold">
+          {INVITE.arabic}
+        </p>
+
+        <div className="my-12 flex flex-col items-center">
+          <p className="font-script text-7xl text-ivory sm:text-8xl">
+            S<span className="mx-2 text-gold">&</span>Z
+          </p>
+
+          <div className="gold-divider mt-5">✦</div>
         </div>
 
-        <motion.div
-          className="relative z-10 flex w-full max-w-md flex-col items-center"
-          animate={opening ? { opacity: 0, y: -25 } : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.65 }}
-        >
-          <p className="font-serif text-xs uppercase tracking-[0.38em] text-sage-dark">
-            In the name of Allah
-          </p>
+        <p className="font-serif text-xs uppercase tracking-[0.35em] text-gold">
+          {INVITE.kicker}
+        </p>
 
-          <h1 className="mt-5 font-script text-[clamp(3rem,11vw,5rem)] leading-[0.95] text-plum">
-            {INVITE.bride}
-          </h1>
+        <h1 className="mt-6 font-script text-4xl leading-tight text-ivory sm:text-5xl">
+          {INVITE.bride}
+        </h1>
 
-          <span className="my-2 font-serif text-3xl italic text-gold">
-            &
-          </span>
+        <p className="my-2 font-serif text-xl italic text-gold">&</p>
 
-          <h2 className="font-script text-[clamp(2.6rem,9vw,4.3rem)] leading-none text-ink">
-            {INVITE.groom}
-          </h2>
+        <h2 className="font-script text-4xl leading-tight text-ivory sm:text-5xl">
+          {INVITE.groom}
+        </h2>
 
-          <div className="mt-7 flex items-center gap-4">
-            <span className="h-px w-12 bg-gold/70" />
-            <span className="font-serif text-sm uppercase tracking-[0.3em] text-ink/60">
-              Save the Date
-            </span>
-            <span className="h-px w-12 bg-gold/70" />
-          </div>
-
-          <p className="mt-3 font-serif text-lg tracking-[0.2em] text-ink/75">
-            THURSDAY · 03 DECEMBER 2026
-          </p>
-        </motion.div>
+        <p className="mt-8 font-serif text-[10px] uppercase tracking-[0.3em] text-muted">
+          {INVITE.weekday} · {INVITE.dateNumeric}
+        </p>
 
         <motion.button
           type="button"
           onClick={handleOpen}
           disabled={opening}
-          aria-label="Open wedding invitation"
-          className="relative z-10 mt-12 block w-[min(78vw,350px)] cursor-pointer outline-offset-8 focus-visible:outline-2 focus-visible:outline-plum disabled:cursor-default"
-          animate={
-            opening
-              ? { scale: 1.04, y: -12, opacity: 0 }
-              : { y: [0, -8, 0] }
-          }
-          transition={
-            opening
-              ? { duration: 0.7 }
-              : { duration: 4, repeat: Infinity, ease: 'easeInOut' }
-          }
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          className="mt-14 border border-gold/60 px-10 py-4 font-serif text-[10px] uppercase tracking-[0.35em] text-gold transition-colors hover:bg-gold hover:text-wine disabled:opacity-60"
         >
-          <EnvelopeWithFlowers open={opening} />
+          {opening ? 'Opening Invitation' : 'Tap to Enter'}
         </motion.button>
 
-        <motion.div
-          className="relative z-10 mt-9"
-          animate={{ opacity: opening ? 0 : [0.5, 1, 0.5] }}
-          transition={
-            opening
-              ? { duration: 0.3 }
-              : { duration: 2.5, repeat: Infinity }
-          }
-        >
-          <p className="font-serif text-sm uppercase tracking-[0.35em] text-plum">
-            {opening ? 'Opening your invitation' : 'Tap to open'}
-          </p>
-          <div className="mx-auto mt-3 h-px w-16 bg-gold/60" />
-        </motion.div>
-
-        <p className="absolute bottom-7 font-script text-3xl text-sage-dark">
+        <p className="mt-8 font-serif text-xs italic tracking-[0.2em] text-muted">
           Insha Allah
         </p>
-      </main>
-    </MotionConfig>
+      </motion.div>
+    </main>
   );
 };
 
