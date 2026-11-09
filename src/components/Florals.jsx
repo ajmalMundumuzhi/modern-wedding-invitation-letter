@@ -1,148 +1,168 @@
 import React, { useId } from 'react';
 
-const TONES = {
-  blush: { base: '#e7a9bd', petal: '#f2c3d1', line: '#c9788f' },
-  rose: { base: '#d9879f', petal: '#e9a6b9', line: '#b0566f' },
-  cream: { base: '#f1ddd6', petal: '#fbf1ee', line: '#d9b7ad' },
-};
+const Rose = ({ x, y, r = 13, tone = 'blush', rotate = 0 }) => {
+  const palettes = {
+    blush: ['#d990a9', '#f5cbd6', '#bd7089'],
+    rose: ['#c77d99', '#e9afc0', '#a95376'],
+    cream: ['#ead4c9', '#fff0e8', '#d4afa4'],
+  };
 
-const Rose = ({ x, y, r = 13, tone = 'blush', rot = 0 }) => {
-  const c = TONES[tone];
+  const [base, petal, center] = palettes[tone];
+
   return (
-    <g transform={`translate(${x} ${y}) rotate(${rot})`}>
-      <circle r={r} fill={c.base} />
-      {[0, 72, 144, 216, 288].map((a) => (
-        <ellipse key={a} cy={-r * 0.42} rx={r * 0.56} ry={r * 0.52} fill={c.petal} opacity="0.92" transform={`rotate(${a})`} />
+    <g transform={`translate(${x} ${y}) rotate(${rotate})`}>
+      {Array.from({ length: 8 }, (_, i) => (
+        <ellipse
+          key={i}
+          cx="0"
+          cy={-r * 0.4}
+          rx={r * 0.45}
+          ry={r * 0.62}
+          fill={petal}
+          transform={`rotate(${i * 45})`}
+        />
       ))}
-      <circle r={r * 0.42} fill={c.base} opacity="0.85" />
-      <path
-        d={`M0 ${-r * 0.3}a${r * 0.3} ${r * 0.3} 0 1 1 ${r * 0.08} ${r * 0.42}`}
-        fill="none"
-        stroke={c.line}
-        strokeWidth="1"
-        strokeLinecap="round"
-      />
+      <circle r={r * 0.48} fill={base} />
+      <circle r={r * 0.2} fill={center} />
     </g>
   );
 };
 
-const Leaf = ({ x, y, rot = 0, s = 1, fill = '#8fa57a' }) => (
-  <path
-    d="M0 0C6-9 18-9 26 0C18 9 6 9 0 0Z"
-    fill={fill}
-    transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}
-  />
+const Leaf = ({ x, y, rotate = 0, scale = 1, fill = '#91a47a' }) => (
+  <g transform={`translate(${x} ${y}) rotate(${rotate}) scale(${scale})`}>
+    <path
+      d="M0 0 C9 -16 27 -17 36 0 C25 16 9 17 0 0Z"
+      fill={fill}
+    />
+    <path
+      d="M0 0 Q18 0 36 0"
+      fill="none"
+      stroke="#d2ddbd"
+      strokeWidth="0.8"
+    />
+  </g>
 );
-
-const Tassel = ({ x, y, len = 70, bend = 6 }) => {
-  const n = Math.floor(len / 7);
-  return (
-    <g>
-      <path d={`M${x} ${y}q${bend} ${len / 2} 0 ${len}`} fill="none" stroke="#7b2a49" strokeWidth="1" opacity="0.8" />
-      {Array.from({ length: n }, (_, i) => {
-        const t = (i + 1) / (n + 1);
-        const cx = x + 2 * (1 - t) * t * bend;
-        const cy = y + 2 * (1 - t) * t * (len / 2) + t * t * len;
-        return <circle key={i} cx={cx} cy={cy} r={2.3 - t * 0.7} fill="#8a2f55" />;
-      })}
-    </g>
-  );
-};
-
-const LEAVES = [
-  { x: 70, y: 104, rot: -170, s: 1.7, fill: '#8fa57a' },
-  { x: 70, y: 104, rot: -130, s: 1.6, fill: '#a9bb91' },
-  { x: 70, y: 104, rot: -95, s: 1.5, fill: '#7f9669' },
-  { x: 70, y: 104, rot: -55, s: 1.5, fill: '#a9bb91' },
-  { x: 70, y: 104, rot: -15, s: 1.6, fill: '#8fa57a' },
-  { x: 70, y: 104, rot: 25, s: 1.5, fill: '#7f9669' },
-  { x: 70, y: 104, rot: 65, s: 1.4, fill: '#a9bb91' },
-  { x: 70, y: 104, rot: 110, s: 1.5, fill: '#8fa57a' },
-  { x: 70, y: 104, rot: 150, s: 1.4, fill: '#7f9669' },
-];
-
-const BUDS = [[70, 56], [106, 72], [26, 98], [114, 130], [44, 140]];
 
 export const Bouquet = ({ className = '', flip = false }) => (
   <svg
-    viewBox="0 0 140 230"
+    viewBox="0 0 160 250"
     className={className}
     style={flip ? { transform: 'scaleX(-1)' } : undefined}
+    fill="none"
     aria-hidden="true"
-    focusable="false"
   >
-    {LEAVES.map((l, i) => (
-      <Leaf key={i} {...l} />
-    ))}
-    <Tassel x={96} y={96} len={112} bend={7} />
-    <Tassel x={108} y={102} len={84} bend={-6} />
-    <Tassel x={86} y={102} len={62} bend={5} />
-    <Rose x={52} y={92} r={17} tone="blush" rot={10} />
-    <Rose x={84} y={80} r={15} tone="rose" rot={-20} />
-    <Rose x={66} y={118} r={14} tone="cream" rot={30} />
-    <Rose x={98} y={112} r={11} tone="blush" />
-    <Rose x={38} y={118} r={9} tone="cream" />
-    {BUDS.map(([x, y], i) => (
-      <circle key={i} cx={x} cy={y} r="4" fill="#f4d2dc" stroke="#c9788f" strokeWidth="0.8" />
-    ))}
+    <g stroke="#82936b" strokeWidth="1.6" strokeLinecap="round">
+      <path d="M76 113 Q60 175 45 245" />
+      <path d="M80 120 Q92 180 117 242" />
+      <path d="M71 130 Q40 180 30 229" />
+      <path d="M87 128 Q123 175 139 226" />
+      <path d="M80 116 Q77 185 78 245" />
+    </g>
+
+    <Leaf x={75} y={170} rotate={-155} scale={0.8} />
+    <Leaf x={78} y={194} rotate={18} scale={0.9} />
+    <Leaf x={53} y={185} rotate={-120} scale={0.7} />
+    <Leaf x={103} y={183} rotate={65} scale={0.8} />
+    <Leaf x={62} y={213} rotate={-145} scale={0.7} />
+    <Leaf x={93} y={218} rotate={45} scale={0.7} />
+
+    <Rose x={48} y={92} r={17} tone="blush" rotate={10} />
+    <Rose x={81} y={77} r={16} tone="rose" rotate={-20} />
+    <Rose x={107} y={104} r={13} tone="cream" rotate={35} />
+    <Rose x={69} y={117} r={13} tone="cream" rotate={-10} />
+    <Rose x={112} y={72} r={9} tone="blush" />
+
+    <g fill="#e8b9c8" stroke="#bd8097" strokeWidth="0.8">
+      <circle cx="31" cy="70" r="4" />
+      <circle cx="94" cy="46" r="4" />
+      <circle cx="126" cy="92" r="3.5" />
+      <circle cx="43" cy="130" r="3" />
+    </g>
+
+    <g stroke="#aab98f" strokeWidth="1.3" fill="none">
+      <path d="M48 87 Q20 52 25 22" />
+      <path d="M82 68 Q76 36 96 15" />
+      <path d="M108 96 Q142 64 139 37" />
+    </g>
   </svg>
 );
 
-const SEAL_PATH = (() => {
-  const pts = [];
-  const N = 48;
-  for (let i = 0; i < N; i++) {
-    const a = (i / N) * Math.PI * 2;
-    const r = 44 + Math.sin(a * 7) * 1.8 + Math.sin(a * 3 + 1) * 1.2;
-    pts.push(`${(50 + Math.cos(a) * r).toFixed(2)} ${(50 + Math.sin(a) * r).toFixed(2)}`);
-  }
-  return `M${pts.join('L')}Z`;
-})();
-
-export const WaxSeal = ({ className = '', initials = 'N&A' }) => {
+export const WaxSeal = ({ className = '', initials = 'S&Z' }) => {
   const id = useId();
+
   return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true" focusable="false">
+    <svg
+      viewBox="0 0 100 100"
+      className={className}
+      aria-hidden="true"
+    >
       <defs>
-        <radialGradient id={id} cx="35%" cy="30%" r="80%">
-          <stop offset="0" stopColor="#b4416f" />
-          <stop offset="0.6" stopColor="#8a2a52" />
-          <stop offset="1" stopColor="#5d1a38" />
+        <radialGradient id={id} cx="35%" cy="28%" r="75%">
+          <stop offset="0%" stopColor="#d993ad" />
+          <stop offset="65%" stopColor="#a94d73" />
+          <stop offset="100%" stopColor="#78334f" />
         </radialGradient>
       </defs>
-      <path d={SEAL_PATH} fill={`url(#${id})`} />
-      <circle cx="50" cy="50" r="30" fill="none" stroke="#c46b92" strokeOpacity="0.55" strokeWidth="1.4" />
-      <text x="50" y="60" textAnchor="middle" fontFamily="'Pinyon Script', cursive" fontSize="28" fill="#eab9cd" fillOpacity="0.9">
+
+      <path
+        d="M50 4 C62 3 66 11 76 12 C88 14 89 25 92 35 C100 48 94 60 89 69 C86 83 76 86 65 90 C55 100 44 95 34 91 C20 91 14 81 11 69 C2 58 7 46 10 35 C11 22 22 17 33 13 C39 6 43 5 50 4Z"
+        fill={`url(#${id})`}
+      />
+
+      <circle
+        cx="50"
+        cy="50"
+        r="33"
+        fill="none"
+        stroke="#efc2d2"
+        strokeOpacity="0.6"
+        strokeWidth="1.2"
+      />
+
+      <text
+        x="50"
+        y="59"
+        textAnchor="middle"
+        fill="#fff0f4"
+        fontFamily="Cormorant Garamond, serif"
+        fontSize="22"
+        fontStyle="italic"
+      >
         {initials}
       </text>
     </svg>
   );
 };
 
-const Frond = ({ x, y, rot, len }) => {
-  let d = `M0 0L0 ${-len}`;
-  for (let t = 10; t < len; t += 9) {
-    const w = 9 * (1 - t / (len * 1.15));
-    d += `M0 ${-t}l${(-w).toFixed(1)} ${(-w * 0.7).toFixed(1)}M0 ${-t}l${w.toFixed(1)} ${(-w * 0.7).toFixed(1)}`;
-  }
-  return <path d={d} transform={`translate(${x} ${y}) rotate(${rot})`} />;
-};
+const Frond = ({ x, y, rotation, length }) => (
+  <g transform={`translate(${x} ${y}) rotate(${rotation})`}>
+    <path d={`M0 0 L0 ${-length}`} />
+    {Array.from({ length: 8 }, (_, i) => {
+      const distance = (i + 1) * length / 9;
+      const width = 10 * (1 - distance / length);
 
-const FRONDS = [
-  [150, 124, 0, 104],
-  [112, 124, -13, 92],
-  [188, 124, 13, 92],
-  [76, 124, -27, 74],
-  [224, 124, 27, 74],
-  [42, 124, -42, 52],
-  [258, 124, 42, 52],
-];
+      return (
+        <g key={i}>
+          <path d={`M0 ${-distance} l${-width} ${-width * 0.6}`} />
+          <path d={`M0 ${-distance} l${width} ${-width * 0.6}`} />
+        </g>
+      );
+    })}
+  </g>
+);
 
-// Fern line-art for the inside of the envelope flap (viewBox 0 0 300 124)
 export const Ferns = () => (
-  <g fill="none" stroke="#a9ba8c" strokeWidth="0.9" strokeLinecap="round" opacity="0.9">
-    {FRONDS.map(([x, y, rot, len], i) => (
-      <Frond key={i} x={x} y={y} rot={rot} len={len} />
-    ))}
+  <g
+    fill="none"
+    stroke="#a2b28a"
+    strokeWidth="1"
+    strokeLinecap="round"
+    opacity="0.9"
+  >
+    <Frond x={150} y={125} rotation={0} length={110} />
+    <Frond x={120} y={125} rotation={-18} length={95} />
+    <Frond x={180} y={125} rotation={18} length={95} />
+    <Frond x={90} y={125} rotation={-36} length={72} />
+    <Frond x={210} y={125} rotation={36} length={72} />
   </g>
 );

@@ -1,199 +1,308 @@
+
 import React, { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Check, X, MessageCircle, ArrowLeft } from 'lucide-react';
 import { Bouquet } from './Florals';
 import { CALL_NUMBER, INVITE, waLink } from '../config';
 
-const inputCls =
-  'mt-1.5 w-full rounded-md border border-ink/25 bg-white px-3 py-3 font-sans text-sm text-ink outline-none transition-colors focus:border-plum';
-
-const Field = ({ label, required, children }) => (
-  <label className="block text-left">
-    <span className="font-serif text-base italic text-ink/80">
-      {label}
-      {required && '*'}
-    </span>
-    {children}
-  </label>
+const Divider = () => (
+  <div className="mx-auto flex items-center justify-center gap-3">
+    <span className="h-px w-12 bg-gold/60" />
+    <span className="text-gold">✦</span>
+    <span className="h-px w-12 bg-gold/60" />
+  </div>
 );
 
 const InviteDetails = ({ onBack }) => {
-  const [form, setForm] = useState({ name: '', phone: '', attending: 'yes', guests: '1', message: '' });
-  const [sentUrl, setSentUrl] = useState(null);
-  const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+  const [response, setResponse] = useState(null);
 
-  const submit = (e) => {
-    e.preventDefault();
-    const yes = form.attending === 'yes';
-    const text = [
-      `RSVP – ${INVITE.groom} & ${INVITE.bride}`,
-      `Name: ${form.name.trim()}`,
-      `Mobile: ${form.phone.trim()}`,
-      `Attending: ${yes ? 'Joyfully accepts' : 'Regretfully declines'}`,
-      yes ? `Guests: ${form.guests}` : null,
-      form.message.trim() ? `Message: ${form.message.trim()}` : null,
-    ]
-      .filter(Boolean)
-      .join('\n');
-    const url = waLink(text);
-    window.open(url, '_blank', 'noopener');
-    setSentUrl(url);
+  const acceptUrl = waLink(
+    `Wedding RSVP - ${INVITE.bride} & ${INVITE.groom}\nResponse: Joyfully accepts the invitation.`
+  );
+
+  const chooseResponse = (value) => {
+    setResponse(value);
   };
 
   return (
-    <main className="min-h-[100svh] bg-white px-5 pb-16 pt-6">
-      <div className="mx-auto max-w-md">
+    <main className="paper-texture relative min-h-[100svh] overflow-hidden px-5 pb-20 pt-8 sm:pt-12">
+      <div className="pointer-events-none absolute -left-24 top-40 h-72 w-72 rounded-full bg-blush/15 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 top-[60%] h-72 w-72 rounded-full bg-sage/15 blur-3xl" />
+
+      <div className="relative mx-auto max-w-lg">
         <button
           type="button"
           onClick={onBack}
-          className="font-serif text-xs font-semibold uppercase tracking-[0.25em] text-ink underline underline-offset-4"
+          className="group flex items-center gap-2 font-serif text-xs uppercase tracking-[0.2em] text-plum transition-colors hover:text-ink"
         >
-          Click to go back
+          <ArrowLeft
+            size={15}
+            className="transition-transform group-hover:-translate-x-1"
+          />
+          Back to invitation
         </button>
 
-        {/* Header card */}
-        <div
-          className="relative mx-auto mt-6 flex w-full bg-[#efeeec] shadow-sm"
-          style={{ aspectRatio: '2.3 / 1', containerType: 'inline-size' }}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative mt-7 overflow-hidden border border-gold/30 bg-[#f3efea] shadow-sm"
         >
-          <div className="flex flex-1 flex-col items-start justify-center pl-[9%] text-ink">
-            <span className="font-serif font-semibold uppercase leading-none" style={{ fontSize: '9cqw', letterSpacing: '0.1em' }}>
-              Share
-            </span>
-            <span className="font-script leading-none text-plum" style={{ fontSize: '13cqw' }}>Your</span>
-            <span className="font-serif font-semibold uppercase leading-none" style={{ fontSize: '9cqw', letterSpacing: '0.1em' }}>
-              Details
-            </span>
-          </div>
-          <div className="relative w-[32%] bg-sage">
-            <Bouquet className="absolute -left-[45%] top-[8%] w-[125%]" />
-          </div>
-        </div>
+          <div className="pointer-events-none absolute inset-[3%] border border-gold/25" />
 
-        <p className="mx-auto mt-10 max-w-sm text-center font-sans text-[13px] font-light leading-relaxed text-ink/85">
-          Thank you for taking the time to reply! To make things easier for a group, please nominate a primary guest to
-          submit <strong className="font-semibold underline underline-offset-2">one form on behalf of your party.</strong>
-          <br />
-          <br />
-          If you need to reach us, call{' '}
-          <a href={`tel:${CALL_NUMBER}`} className="underline underline-offset-2">{CALL_NUMBER.replace('+91', '+91 ')}</a>.
-        </p>
-
-        {/* Where and when */}
-        <section className="mt-10 space-y-4">
-          {INVITE.events.map((ev) => (
-            <article key={ev.title} className="border border-plum/20 px-5 py-6 text-center">
-              <p className="font-serif text-xs font-semibold uppercase tracking-[0.3em] text-ink/70">{ev.title}</p>
-              <p className="mt-2 font-script text-4xl leading-none text-plum">{ev.time}</p>
-              <p className="mt-2 font-serif text-sm uppercase tracking-[0.15em] text-ink/70">{ev.date}</p>
-              <p className="mt-3 font-sans text-[13px] font-light leading-relaxed">{ev.venue}</p>
-              <a
-                href={ev.map}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-block font-serif text-xs font-semibold uppercase tracking-[0.25em] text-plum underline underline-offset-4"
-              >
-                View map
-              </a>
-            </article>
-          ))}
-        </section>
-
-        {/* Families */}
-        <section className="mt-10 space-y-6 text-center">
-          {INVITE.families.map((f) => (
-            <div key={f.name}>
-              <p className="font-script text-4xl leading-none text-ink">{f.name}</p>
-              <p className="mt-1 font-serif text-xs uppercase tracking-[0.3em] text-plum">{f.relation}</p>
-              <p className="mt-1 font-sans text-[13px] font-medium">{f.parents}</p>
-              <p className="font-serif text-sm italic text-ink/60">{f.home}</p>
-            </div>
-          ))}
-        </section>
-
-        {/* RSVP form */}
-        <section className="mt-12">
-          {sentUrl ? (
-            <div className="border border-plum/25 px-6 py-10 text-center">
-              <p className="font-script text-5xl text-plum">Thank you!</p>
-              <p className="mt-3 font-sans text-[13px] font-light leading-relaxed">
-                WhatsApp should have opened with your reply ready to send. Please press send there to confirm.
+          <div className="relative flex min-h-44 items-center overflow-hidden px-7 py-9">
+            <div className="relative z-10 max-w-[75%]">
+              <p className="font-serif text-[9px] uppercase tracking-[0.3em] text-sage-dark sm:text-[10px]">
+                We would love to celebrate with you
               </p>
-              <a
-                href={sentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-block font-serif text-xs font-semibold uppercase tracking-[0.25em] text-plum underline underline-offset-4"
-              >
-                Open WhatsApp again
-              </a>
-              <button
-                type="button"
-                onClick={() => setSentUrl(null)}
-                className="mt-4 block w-full font-serif text-xs uppercase tracking-[0.25em] text-ink/60 underline underline-offset-4"
-              >
-                Edit my reply
-              </button>
+
+              <h1 className="mt-4 font-serif text-3xl font-light leading-tight text-ink">
+                Would You
+              </h1>
+
+              <p className="font-script text-[clamp(2.8rem,9vw,4rem)] leading-none text-plum">
+                Join Us?
+              </p>
             </div>
-          ) : (
-            <form onSubmit={submit} className="space-y-5">
-              <Field label="Primary Guest Name" required>
-                <input className={inputCls} value={form.name} onChange={set('name')} required autoComplete="name" />
-              </Field>
-              <Field label="Mobile Number" required>
-                <input className={inputCls} value={form.phone} onChange={set('phone')} required type="tel" autoComplete="tel" inputMode="tel" />
-              </Field>
 
-              <fieldset className="grid grid-cols-2 gap-3">
-                <legend className="sr-only">Will you attend?</legend>
-                {[
-                  ['yes', 'Joyfully accept'],
-                  ['no', 'Regretfully decline'],
-                ].map(([value, label]) => (
-                  <label key={value} className="cursor-pointer">
-                    <input
-                      type="radio"
-                      name="attending"
-                      value={value}
-                      checked={form.attending === value}
-                      onChange={set('attending')}
-                      className="peer sr-only"
-                    />
-                    <span className="block rounded-full border border-ink/25 px-3 py-3 text-center font-serif text-sm peer-checked:border-plum peer-checked:bg-plum peer-checked:text-white peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-plum/50">
-                      {label}
-                    </span>
-                  </label>
-                ))}
-              </fieldset>
+            <Bouquet className="pointer-events-none absolute -right-3 -top-5 w-[42%] opacity-90" />
+          </div>
+        </motion.section>
 
-              {form.attending === 'yes' && (
-                <Field label="Number of Guests">
-                  <select className={inputCls} value={form.guests} onChange={set('guests')}>
-                    {Array.from({ length: 8 }, (_, i) => i + 1).map((n) => (
-                      <option key={n} value={n}>{n}</option>
-                    ))}
-                  </select>
-                </Field>
-              )}
+        <motion.section
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mt-9 text-center"
+        >
+          <p className="font-script text-[clamp(2rem,7vw,3rem)] leading-tight text-plum">
+            {INVITE.bride} & {INVITE.groom}
+          </p>
 
-              <Field label="A message for the couple">
-                <textarea className={`${inputCls} min-h-24 resize-none`} value={form.message} onChange={set('message')} />
-              </Field>
+          <p className="mt-3 font-serif text-[10px] uppercase tracking-[0.24em] text-sage-dark sm:text-xs">
+            Thursday · 03 December 2026
+          </p>
 
-              <button
-                type="submit"
-                className="w-full rounded-full bg-plum py-4 font-serif text-sm font-semibold uppercase tracking-[0.3em] text-white shadow-lg transition-transform active:scale-[0.98]"
+          <div className="mt-6">
+            <Divider />
+          </div>
+
+          <p className="mx-auto mt-6 max-w-sm font-sans text-sm font-light leading-7 text-ink/70">
+            We would be delighted to have you with us as we begin this
+            beautiful journey together. Your presence would make our
+            celebration even more special.
+          </p>
+        </motion.section>
+
+        <section className="mt-12">
+          <div className="mb-7 text-center">
+            <p className="font-serif text-[10px] uppercase tracking-[0.3em] text-sage-dark">
+              Wedding celebrations
+            </p>
+
+            <h2 className="mt-2 font-script text-4xl text-plum">
+              Where & When
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {INVITE.events.map((event, index) => (
+              <motion.article
+                key={event.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.12 }}
+                className="relative border border-gold/30 bg-white/65 px-6 py-7 text-center"
               >
-                Send RSVP
-              </button>
-            </form>
-          )}
+                <div className="pointer-events-none absolute inset-[7px] border border-gold/15" />
+
+                <div className="relative">
+                  <span className="font-serif text-[10px] uppercase tracking-[0.3em] text-sage-dark">
+                    {event.title}
+                  </span>
+
+                  <p className="mt-3 font-script text-4xl text-plum">
+                    {event.time}
+                  </p>
+
+                  <p className="mt-2 font-serif text-sm uppercase tracking-[0.15em] text-ink/65">
+                    {event.date}
+                  </p>
+
+                  <div className="mx-auto my-4 h-px w-12 bg-gold/50" />
+
+                  <p className="font-sans text-sm leading-6 text-ink/80">
+                    {event.venue}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </section>
 
-        <p className="mx-auto mt-14 max-w-xs text-center font-serif text-base italic leading-relaxed text-ink/75">
-          “{INVITE.verse.text}”
-          <span className="mt-2 block text-xs font-semibold not-italic uppercase tracking-[0.35em] text-plum">
-            {INVITE.verse.ref}
-          </span>
-        </p>
+        <section className="mt-12 border-y border-gold/25 py-9 text-center">
+          <p className="font-serif text-[10px] uppercase tracking-[0.3em] text-sage-dark">
+            With the blessings of our families
+          </p>
+
+          <h2 className="mt-3 font-script text-4xl text-plum">
+            Our Families
+          </h2>
+
+          <div className="mt-8 space-y-9">
+            {INVITE.families.map((family, index) => (
+              <div key={family.name}>
+                {index > 0 && (
+                  <div className="mx-auto mb-8 h-px w-12 bg-gold/50" />
+                )}
+
+                <h3 className="font-script text-4xl text-ink">
+                  {family.name}
+                </h3>
+
+                <p className="mt-2 font-serif text-xs uppercase tracking-[0.25em] text-plum">
+                  {family.relation}
+                </p>
+
+                <p className="mx-auto mt-2 max-w-sm font-serif text-lg leading-7 text-ink/85">
+                  {family.parents}
+                </p>
+
+                <p className="mt-2 font-sans text-xs leading-6 text-ink/55">
+                  {family.home}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-14 text-center">
+          <p className="font-serif text-[10px] uppercase tracking-[0.35em] text-sage-dark">
+            A celebration of love
+          </p>
+
+          <h2 className="mt-3 font-script text-[clamp(3.5rem,12vw,5.5rem)] leading-tight text-plum">
+            Would You Join Us?
+          </h2>
+
+          <p className="mt-2 font-serif text-sm uppercase tracking-[0.14em] text-sage-dark">
+            We would love to have you with us
+          </p>
+
+          <AnimatePresence mode="wait">
+            {response === null ? (
+              <motion.div
+                key="choices"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.35 }}
+                className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              >
+                <button
+                  type="button"
+                  onClick={() => chooseResponse('yes')}
+                  className="min-h-14 rounded-full bg-plum px-7 py-4 font-serif text-[11px] uppercase tracking-[0.17em] text-white shadow-[0_12px_25px_rgba(104,45,74,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-95"
+                >
+                  Yes, I'll be there
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => chooseResponse('no')}
+                  className="min-h-14 rounded-full border border-plum/35 bg-white/50 px-7 py-4 font-serif text-[11px] uppercase tracking-[0.17em] text-plum transition-all duration-300 hover:-translate-y-1 hover:border-plum hover:bg-white active:scale-95"
+                >
+                  Sorry, I can't
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div
+                key={response}
+                initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.45 }}
+                className="mt-10 rounded-[3rem] border border-gold/25 bg-white/75 px-6 py-12 text-center shadow-[0_18px_35px_rgba(60,45,32,0.09)] sm:px-10"
+              >
+                {response === 'yes' ? (
+                  <>
+                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-sage/15 text-sage-dark">
+                      <Check size={36} strokeWidth={1.6} />
+                    </div>
+
+                    <h3 className="mt-7 font-script text-6xl text-plum">
+                      Wonderful!
+                    </h3>
+
+                    <p className="mx-auto mt-4 max-w-sm font-serif text-lg leading-8 text-ink/75">
+                      We're so happy you'll be joining us!
+                      <span className="block">
+                        Please confirm your response on WhatsApp.
+                      </span>
+                    </p>
+
+                    <a
+                      href={acceptUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-8 inline-flex items-center gap-2 border-b border-plum/50 pb-1 font-serif text-xs uppercase tracking-[0.15em] text-plum transition-colors hover:text-sage-dark"
+                    >
+                      Confirm on WhatsApp
+                      <MessageCircle size={16} />
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-blush/30 text-plum">
+                      <X size={34} strokeWidth={1.6} />
+                    </div>
+
+                    <h3 className="mt-7 font-script text-6xl text-plum">
+                      We'll Miss You
+                    </h3>
+
+                    <p className="mx-auto mt-4 max-w-sm font-serif text-lg leading-8 text-ink/75">
+                      Thank you for letting us know.
+                      <span className="block">
+                        You'll be with us in spirit!
+                      </span>
+                    </p>
+                  </>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setResponse(null)}
+                  className="mt-9 block w-full font-serif text-[11px] uppercase tracking-[0.17em] text-plum/65 transition-colors hover:text-plum"
+                >
+                  Change response
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+
+        <footer className="mt-16 text-center">
+          <p className="font-script text-5xl text-plum">
+            Insha Allah
+          </p>
+
+          <p className="mt-4 font-serif text-xs uppercase tracking-[0.25em] text-sage-dark">
+            We look forward to celebrating with you
+          </p>
+
+          <a
+            href={`tel:${CALL_NUMBER}`}
+            className="mt-5 inline-block font-sans text-xs text-ink/55 underline underline-offset-4"
+          >
+            Contact the family
+          </a>
+
+          <div className="mt-7">
+            <Divider />
+          </div>
+        </footer>
       </div>
     </main>
   );
