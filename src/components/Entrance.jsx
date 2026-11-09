@@ -70,10 +70,6 @@ const Entrance = ({ onStartOpen, opening = false }) => {
   Zainulabidheen
 </p>
 
-<p className="mt-1 font-serif text-sm italic tracking-[0.25em] text-gold/90">
-  K.P
-</p>
-
 <p className="my-4 font-serif text-3xl font-light italic text-gold">
   &
 </p>
