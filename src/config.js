@@ -42,7 +42,7 @@ export const INVITE = {
       name: 'Sana Ek',
       relation: 'Daughter of',
       parents: 'Mr. Ek Koya (Late) & Mrs. Sakeena MSV',
-      home: 'Sana Mahal (H), Kovoor, Kallady (P.O), Medical College',
+      home: 'Sana Mahal (H), Kovoor, Medical College',
     },
   ],
   verse:
