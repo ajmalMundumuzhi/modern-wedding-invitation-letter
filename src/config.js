@@ -33,7 +33,7 @@ export const INVITE = {
   ],
   families: [
     {
-      name: 'Zainulabidheen K.P',
+      name: 'Zainulabidheen',
       relation: 'Son of',
       parents: 'Mr. K.P Koya & Mrs. Suhana C.V',
       home: 'Kuttilthazham, Mankavu, Calicut',
