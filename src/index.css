@@ -1,93 +1,32 @@
 @import "tailwindcss";
 
 @theme {
+  --font-script: "Pinyon Script", cursive;
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
-  --font-cursive: "Parisienne", cursive;
 
-  /* Ivory page background */
-  --color-rose-bg: #fbf7f0;
-  --color-cream: #f6efe2;
-
-  /* "rose" now = deep burgundy scale (name kept so existing components inherit it) */
-  --color-rose-50: #f8eeee;
-  --color-rose-100: #f2dede;
-  --color-rose-200: #e6c3c3;
-  --color-rose-300: #d49a9a;
-  --color-rose-400: #bb6b6b;
-  --color-rose-500: #9c4448;
-  --color-rose-600: #7f2c33;
-  --color-rose-700: #661f28;
-  --color-rose-800: #521922;
-  --color-rose-900: #3f131a;
-  --color-rose-950: #2a0c11;
-
-  /* Muted antique gold */
-  --color-gold: #b8963e;
-  --color-gold-light: #e9d49a;
-  --color-gold-dark: #8a6c24;
+  --color-paper: #fbfaf8;
+  --color-ink: #4a3a43;
+  --color-blush: #ecd3dc;
+  --color-sage: #a9b98b;
+  --color-plum: #8a2f5c;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background-color: var(--color-rose-bg);
-  color: var(--color-rose-900);
+  background: #fff;
+  color: var(--color-ink);
   overflow-x: hidden;
 }
 
-/* Hide the native cursor only where the custom cursor is actually shown */
-@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
-  :root {
-    cursor: none;
-  }
-}
-
-::selection {
-  background-color: var(--color-rose-700);
-  color: #fff;
-}
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--color-rose-bg); }
-::-webkit-scrollbar-thumb { background: var(--color-gold); border-radius: 10px; }
-
-.glass {
-  background: rgba(251, 247, 240, 0.75);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-}
-
-.text-gradient-rose {
-  background: linear-gradient(to right, var(--color-rose-700), var(--color-rose-900));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0; transform: scale(0); }
-  50% { opacity: 0.55; transform: scale(1); }
-}
-.animate-twinkle {
-  animation: twinkle var(--d, 4s) ease-in-out var(--delay, 0s) infinite;
-}
+::selection { background: var(--color-plum); color: #fff; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
-}
-
-@keyframes loader-slide {
-  from { left: -35%; }
-  to   { left: 100%; }
 }
