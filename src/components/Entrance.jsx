@@ -28,7 +28,15 @@ const Entrance = ({ onStartOpen, opening = false }) => {
       aria-label="Open wedding invitation"
       className="relative flex min-h-[100svh] cursor-pointer items-center justify-center overflow-hidden bg-[#21070d] px-6 py-12 text-center outline-none"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(116,42,57,0.3),transparent_65%)]" />
+      <img
+        src="/bg.png"
+        alt=""
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40"
+      />
+
+      <div className="pointer-events-none absolute inset-0 bg-[#21070d]/50" />
+
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(116,42,57,0.25),transparent_70%)]" />
 
       <div className="pointer-events-none absolute inset-5 border border-gold/20 sm:inset-8">
         <div className="absolute inset-2 border border-gold/10" />
@@ -66,17 +74,17 @@ const Entrance = ({ onStartOpen, opening = false }) => {
           }
           transition={{ duration: 0.8 }}
         >
-          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-4xl">
-  Zainulabidheen
-</p>
+          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-7xl">
+            Zain
+          </p>
 
-<p className="my-4 font-serif text-3xl font-light italic text-gold">
-  &
-</p>
+          <p className="my-4 font-serif text-3xl font-light italic text-gold">
+            &
+          </p>
 
-<p className="font-serif text-7xl font-light italic tracking-wide leading-tight text-ivory sm:text-4xl">
-  Sana Ek
-</p>
+          <p className="font-serif text-7xl font-light italic tracking-wide leading-tight text-ivory sm:text-8xl">
+            Sana
+          </p>
 
           <div className="gold-divider mt-8 text-gold/80">
             ✦

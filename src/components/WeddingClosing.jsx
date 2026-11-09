@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Check, X, MessageCircle } from 'lucide-react';
+import { Check, X, MessageCircle, } from 'lucide-react';
 import { INVITE, waLink } from '../config';
 
 const WeddingClosing = () => {
@@ -15,7 +15,7 @@ const WeddingClosing = () => {
   return (
     <section
       id="rsvp"
-      className="wedding-section border-t border-gold/20 px-6 py-28 text-center sm:py-36"
+      className="wedding-section border-t border-gold/20 px-6 pb-8 pt-28 text-center sm:pt-36"
     >
       <motion.div
         initial={{ opacity: 0, y: 25 }}
@@ -136,6 +136,24 @@ const WeddingClosing = () => {
           <div className="gold-divider mt-8">✦</div>
         </div>
       </motion.div>
+
+      <div className="mx-auto mt-24 max-w-2xl border-t border-gold/15 pt-7">
+  <a
+    href="https://www.instagram.com/rdr.technology/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="RDR Technology on Instagram"
+    className="inline-flex items-center gap-2 font-serif text-xs tracking-wide text-muted transition-colors duration-300 hover:text-gold"
+  >
+    <span>Designed by</span>
+
+    <span className="font-medium text-gold">
+      RDR Technology
+    </span>
+
+    
+  </a>
+</div>
     </section>
   );
 };

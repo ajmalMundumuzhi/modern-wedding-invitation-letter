@@ -28,10 +28,10 @@ const OurFamilies = () => (
             className="border border-gold/35 px-6 py-10 sm:px-8"
           >
             <p className="font-serif text-[10px] uppercase tracking-[0.3em] text-gold">
-              {index === 0 ? 'The Bride' : 'The Groom'}
+              {index === 0 ? 'The Groom' : 'The Bride'}
             </p>
 
-            <h3 className="mt-6 font-script text-5xl text-ivory">
+            <h3 className="mt-6 font-script text-4xl text-ivory">
               {family.name}
             </h3>
 

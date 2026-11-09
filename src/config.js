@@ -6,8 +6,8 @@ export const waLink = (text, number = WHATSAPP_NUMBER) =>
   `https://wa.me/${String(number).replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
 
 export const INVITE = {
-  groom: 'Zainulabidheen',
-  bride: 'Sana Ek',
+  groom: 'Zain',
+  bride: 'Sana',
   dateNumeric: '03 December 2026',
   weekday: 'Thursday',
   arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
@@ -33,7 +33,7 @@ export const INVITE = {
   ],
   families: [
     {
-      name: 'Zainulabidheen',
+      name: 'Zainulabidheen KP',
       relation: 'Son of',
       parents: 'Mr. K.P Koya & Mrs. Suhana C.V',
       home: 'Kuttilthazham, Mankavu, Calicut',

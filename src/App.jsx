@@ -81,13 +81,13 @@ const App = () => {
       }}
     >
       <audio
-        ref={audioRef}
-        loop
-        preload="auto"
-        src="/music.mp3"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-      />
+  ref={audioRef}
+  loop
+  preload="auto"
+  src="/bg-music.mp3.mpeg"
+  onPlay={() => setIsPlaying(true)}
+  onPause={() => setIsPlaying(false)}
+/>
 
       <CustomCursor />
 
@@ -158,7 +158,7 @@ const App = () => {
       )}
 
       {opened && (
-        <div className="fixed right-5 top-5 z-50 flex flex-col items-center gap-3">
+        <div className="fixed bottom-6 right-5 z-50 flex flex-col items-center gap-3 sm:bottom-8 sm:right-8">
           <button
             type="button"
             onClick={toggleMusic}
