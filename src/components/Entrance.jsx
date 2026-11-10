@@ -29,23 +29,23 @@ const Entrance = ({ onStartOpen, opening = false }) => {
       className="relative flex min-h-[100svh] cursor-pointer items-center justify-center overflow-hidden bg-[#21070d] px-6 py-12 text-center outline-none"
     >
       <img
-        src="/bg.png"
+        src="/bg.jpeg"
         alt=""
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-40"
+        className="absolute inset-0 object-cover w-full h-full pointer-events-none opacity-40"
       />
 
       <div className="pointer-events-none absolute inset-0 bg-[#21070d]/50" />
 
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(116,42,57,0.25),transparent_70%)]" />
 
-      <div className="pointer-events-none absolute inset-5 border border-gold/20 sm:inset-8">
-        <div className="absolute inset-2 border border-gold/10" />
+      <div className="absolute border pointer-events-none inset-5 border-gold/20 sm:inset-8">
+        <div className="absolute border inset-2 border-gold/10" />
       </div>
 
-      <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+      <div className="absolute top-0 w-px h-40 -translate-x-1/2 pointer-events-none left-1/2 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
 
       <motion.div
-        className="relative z-10 mx-auto flex w-full max-w-md flex-col items-center"
+        className="relative z-10 flex flex-col items-center w-full max-w-md mx-auto"
         animate={
           opening
             ? { opacity: 0, scale: 0.96, y: -12 }
@@ -66,7 +66,7 @@ const Entrance = ({ onStartOpen, opening = false }) => {
         </motion.p>
 
         <motion.div
-          className="my-14 flex flex-col items-center sm:my-16"
+          className="flex flex-col items-center my-14 sm:my-16"
           animate={
             opening
               ? { scale: 1.05, opacity: 0 }
@@ -74,19 +74,19 @@ const Entrance = ({ onStartOpen, opening = false }) => {
           }
           transition={{ duration: 0.8 }}
         >
-          <p className="font-serif text-6xl font-light italic tracking-wide leading-tight text-ivory sm:text-7xl">
+          <p className="font-serif text-6xl italic font-light leading-tight tracking-wide text-ivory sm:text-7xl">
             Zain
           </p>
 
-          <p className="my-4 font-serif text-3xl font-light italic text-gold">
+          <p className="my-4 font-serif text-3xl italic font-light text-gold">
             &
           </p>
 
-          <p className="font-serif text-7xl font-light italic tracking-wide leading-tight text-ivory sm:text-8xl">
+          <p className="font-serif italic font-light leading-tight tracking-wide text-7xl text-ivory sm:text-8xl">
             Sana
           </p>
 
-          <div className="gold-divider mt-8 text-gold/80">
+          <div className="mt-8 gold-divider text-gold/80">
             ✦
           </div>
         </motion.div>
@@ -116,7 +116,7 @@ const Entrance = ({ onStartOpen, opening = false }) => {
         </motion.p>
       </motion.div>
 
-      <div className="pointer-events-none absolute bottom-12 left-1/2 h-10 w-px -translate-x-1/2 bg-gradient-to-b from-gold/40 to-transparent" />
+      <div className="absolute w-px h-10 -translate-x-1/2 pointer-events-none bottom-12 left-1/2 bg-gradient-to-b from-gold/40 to-transparent" />
     </main>
   );
 };
